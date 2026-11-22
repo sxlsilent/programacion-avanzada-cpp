@@ -1,0 +1,101 @@
+// Ejercicio 21: plantillas de funcion (desde cero)
+//
+// Este archivo no tiene codigo de partida. Escribe tus propios includes, tus
+// propias plantillas y tu propio main().
+//
+// Escribe tres plantillas de funcion, cada una con template <typename T>:
+//
+// - T menorDeTres(T a, T b, T c): el menor de los tres, usando solo
+//   operator<.
+// - T sumarArreglo(T valores[], int cantidad): la suma de todos los
+//   valores, empezando desde el primero (si cantidad es 0, devuelve T(),
+//   el valor por defecto del tipo, que es 0 para int y double).
+// - void intercambiar(T* a, T* b): intercambia los valores a los que
+//   apuntan a y b.
+//
+// En main(), con los textos de la salida esperada:
+// - menorDeTres con 14, 9 y 30; con 0.75, 1.5 y 0.25; y con 'q', 'c' y 'x'.
+// - sumarArreglo con el arreglo int {4, 8, 15, 16, 23, 42} y con el arreglo
+//   double {1.5, 2.25, 0.25}.
+// - intercambiar dos int que valen 3 y 7 (imprime los dos despues) y dos
+//   double que valen 1.5 y 9.5 (imprime los dos despues).
+// - menorDeTres con 5, 2.5 y 4, que mezcla int y double: escribe el tipo
+//   entre angulos para que compile.
+//
+// Compilar: g++ -std=c++20 -Wall -Wextra -g -o ejercicio21 ejercicio21_plantillas_menor_suma.cpp
+// Ejecutar: ./ejercicio21
+//
+// Salida esperada:
+// Menor de 14, 9 y 30: 9
+// Menor de 0.75, 1.5 y 0.25: 0.25
+// Menor de q, c y x: c
+// Suma de enteros: 108
+// Suma de decimales: 4
+// Intercambio de enteros: 7 3
+// Intercambio de decimales: 9.5 1.5
+// Menor de 5, 2.5 y 4: 2.5
+
+#include <iostream>
+
+template <typename T>
+T menorDeTres(T a, T b, T c) {
+    T menor = a;
+
+    if (b < menor) {
+        menor = b;
+    }
+
+    if (c < menor) {
+        menor = c;
+    }
+
+    return menor;
+}
+
+template <typename T>
+T sumarArreglo(T valores[], int cantidad) {
+    if (cantidad == 0) {
+        return T();
+    }
+
+    T suma = valores[0];
+
+    for (int i = 1; i < cantidad; i++) {
+        suma = suma + valores[i];
+    }
+
+    return suma;
+}
+
+template <typename T>
+void intercambiar(T* a, T* b) {
+    T temporal = *a;
+    *a = *b;
+    *b = temporal;
+}
+
+int main() {
+    std::cout << "Menor de 14, 9 y 30: " << menorDeTres(14, 9, 30) << std::endl;
+    std::cout << "Menor de 0.75, 1.5 y 0.25: " << menorDeTres(0.75, 1.5, 0.25) << std::endl;
+    std::cout << "Menor de q, c y x: " << menorDeTres('q', 'c', 'x') << std::endl;
+
+    int enteros[6] = {4, 8, 15, 16, 23, 42};
+    std::cout << "Suma de enteros: " << sumarArreglo(enteros, 6) << std::endl;
+
+    double decimales[3] = {1.5, 2.25, 0.25};
+    std::cout << "Suma de decimales: " << sumarArreglo(decimales, 3) << std::endl;
+
+    int a = 3;
+    int b = 7;
+    intercambiar(&a, &b);
+    std::cout << "Intercambio de enteros: " << a << " " << b << std::endl;
+
+    double x = 1.5;
+    double y = 9.5;
+    intercambiar(&x, &y);
+    std::cout << "Intercambio de decimales: " << x << " " << y << std::endl;
+
+    std::cout << "Menor de 5, 2.5 y 4: " << menorDeTres<double>(5, 2.5, 4) << std::endl;
+
+    return 0;
+}
